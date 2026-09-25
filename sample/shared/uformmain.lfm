@@ -1,0 +1,830 @@
+object FormMain: TFormMain
+  Left = 310
+  Height = 610
+  Top = 112
+  Width = 816
+  Caption = 'SMAPICOM'
+  ClientHeight = 610
+  ClientWidth = 816
+  OnShow = FormShow
+  LCLVersion = '3.9.0.0'
+  object PageControl1: TPageControl
+    Left = 8
+    Height = 499
+    Top = 8
+    Width = 800
+    ActivePage = TabSheetDLL
+    Align = alClient
+    BorderSpacing.Around = 8
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheetDLL: TTabSheet
+      Caption = 'MAPI DLL'
+      ClientHeight = 471
+      ClientWidth = 792
+      object GroupBox1: TGroupBox
+        Left = 8
+        Height = 211
+        Top = 8
+        Width = 776
+        Align = alTop
+        BorderSpacing.Around = 8
+        Caption = 'List MAPI profiles (on COM server side)'
+        ClientHeight = 191
+        ClientWidth = 772
+        TabOrder = 0
+        object ButtonDLLList: TButton
+          AnchorSideLeft.Control = GroupBox1
+          AnchorSideTop.Control = GroupBox1
+          Left = 8
+          Height = 25
+          Top = 8
+          Width = 113
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'List MAPI clients'
+          TabOrder = 0
+          OnClick = ButtonDLLListClick
+        end
+        object ListViewDLL: TListView
+          AnchorSideLeft.Control = GroupBox1
+          AnchorSideTop.Control = ButtonDLLList
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = GroupBox1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = GroupBox1
+          AnchorSideBottom.Side = asrBottom
+          Left = 8
+          Height = 142
+          Top = 41
+          Width = 756
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Around = 8
+          Columns = <          
+            item
+              Caption = 'Profile name'
+              Width = 300
+            end          
+            item
+              Caption = 'Client library'
+              Width = 600
+            end>
+          TabOrder = 1
+          ViewStyle = vsReport
+          OnClick = ListViewDLLClick
+        end
+        object CheckBoxDLLDef: TCheckBox
+          AnchorSideLeft.Control = ButtonDLLList
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = ButtonDLLList
+          AnchorSideTop.Side = asrCenter
+          Left = 161
+          Height = 19
+          Top = 11
+          Width = 134
+          BorderSpacing.Left = 32
+          BorderSpacing.Around = 8
+          Caption = 'List only default client'
+          TabOrder = 2
+        end
+      end
+      object GroupBox2: TGroupBox
+        Left = 8
+        Height = 92
+        Top = 227
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Load MAPI client DLL'
+        ClientHeight = 72
+        ClientWidth = 772
+        TabOrder = 1
+        object ButtonDLLLoad: TButton
+          AnchorSideLeft.Control = GroupBox2
+          AnchorSideTop.Control = FileNameEditDLL
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 39
+          Width = 120
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Load client library'
+          TabOrder = 0
+          OnClick = ButtonDLLLoadClick
+        end
+        object FileNameEditDLL: TFileNameEdit
+          AnchorSideLeft.Control = Label1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBox2
+          AnchorSideRight.Control = GroupBox2
+          AnchorSideRight.Side = asrBottom
+          Left = 113
+          Height = 23
+          Top = 8
+          Width = 651
+          FilterIndex = 0
+          HideDirectories = False
+          ButtonWidth = 23
+          NumGlyphs = 1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          MaxLength = 0
+          TabOrder = 1
+        end
+        object Label1: TLabel
+          AnchorSideLeft.Control = GroupBox2
+          AnchorSideTop.Control = FileNameEditDLL
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 97
+          BorderSpacing.Around = 8
+          Caption = 'MAPI client library'
+        end
+      end
+    end
+    object TabSheetLogInOff: TTabSheet
+      Caption = 'Logon/Logoff'
+      ClientHeight = 471
+      ClientWidth = 792
+      TabVisible = False
+      object GroupBoxLogon: TGroupBox
+        Left = 8
+        Height = 123
+        Top = 8
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Logon (MAPILogon)'
+        ClientHeight = 103
+        ClientWidth = 772
+        TabOrder = 0
+        object Label2: TLabel
+          AnchorSideLeft.Control = GroupBoxLogon
+          AnchorSideTop.Control = EditProfileName
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 67
+          BorderSpacing.Around = 8
+          Caption = 'Profile name'
+        end
+        object Label3: TLabel
+          AnchorSideLeft.Control = GroupBoxLogon
+          AnchorSideTop.Control = EditPassword
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 43
+          Width = 50
+          BorderSpacing.Around = 8
+          Caption = 'Password'
+        end
+        object EditProfileName: TEdit
+          AnchorSideLeft.Control = Label2
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBoxLogon
+          AnchorSideRight.Control = CheckGroupLogonFlags
+          Left = 83
+          Height = 23
+          Top = 8
+          Width = 368
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 0
+        end
+        object EditPassword: TEdit
+          AnchorSideLeft.Control = Label3
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = EditProfileName
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = CheckGroupLogonFlags
+          Left = 66
+          Height = 23
+          Top = 39
+          Width = 385
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 1
+        end
+        object CheckGroupLogonFlags: TCheckGroup
+          AnchorSideTop.Control = GroupBoxLogon
+          AnchorSideRight.Control = GroupBoxLogon
+          AnchorSideRight.Side = asrBottom
+          Left = 459
+          Height = 70
+          Top = 8
+          Width = 305
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Flags'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 2
+          ClientHeight = 50
+          ClientWidth = 301
+          Columns = 2
+          Items.Strings = (
+            'MAPI_LOGON_UI'
+            'MAPI_PASSWORD_UI'
+            'MAPI_NEW_SESSION'
+            'MAPI_FORCE_DOWNLOAD'
+          )
+          TabOrder = 2
+          Data = {
+            0400000002020202
+          }
+        end
+        object ButtonLogon: TButton
+          AnchorSideLeft.Control = GroupBoxLogon
+          AnchorSideTop.Control = EditPassword
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 70
+          Width = 60
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Logon'
+          TabOrder = 3
+          OnClick = ButtonLogonClick
+        end
+      end
+      object GroupBoxLogoff: TGroupBox
+        Left = 8
+        Height = 61
+        Top = 139
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Logoff (MAPILogoff)'
+        ClientHeight = 41
+        ClientWidth = 772
+        TabOrder = 1
+        object ButtonLogoff: TButton
+          AnchorSideLeft.Control = GroupBoxLogoff
+          AnchorSideTop.Control = GroupBoxLogoff
+          Left = 8
+          Height = 25
+          Top = 8
+          Width = 61
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Logoff'
+          Enabled = False
+          TabOrder = 0
+          OnClick = ButtonLogoffClick
+        end
+      end
+    end
+    object TabSheetFindRead: TTabSheet
+      Caption = 'Find/Read'
+      ClientHeight = 471
+      ClientWidth = 792
+      TabVisible = False
+      object GroupBox3: TGroupBox
+        Left = 8
+        Height = 125
+        Top = 8
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Find (MAPIFindNext)'
+        ClientHeight = 105
+        ClientWidth = 772
+        TabOrder = 0
+        object Label4: TLabel
+          AnchorSideLeft.Control = GroupBox3
+          AnchorSideTop.Control = EditMessageType
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 74
+          BorderSpacing.Around = 8
+          Caption = 'Message Type'
+        end
+        object Label5: TLabel
+          AnchorSideLeft.Control = GroupBox3
+          AnchorSideTop.Control = EditSeedMessageID
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 43
+          Width = 88
+          BorderSpacing.Around = 8
+          Caption = 'Seed Message ID'
+        end
+        object CheckGroupFindFlags: TCheckGroup
+          AnchorSideTop.Control = GroupBox3
+          AnchorSideRight.Control = GroupBox3
+          AnchorSideRight.Side = asrBottom
+          Left = 600
+          Height = 89
+          Top = 8
+          Width = 164
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Flags'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          ClientHeight = 69
+          ClientWidth = 160
+          Items.Strings = (
+            'MAPI_GUARANTEE_FIFO'
+            'MAPI_LONG_MSGID'
+            'MAPI_UNREAD_ONLY'
+          )
+          TabOrder = 0
+          Data = {
+            03000000020202
+          }
+        end
+        object EditMessageType: TEdit
+          AnchorSideLeft.Control = Label4
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBox3
+          AnchorSideRight.Control = CheckGroupFindFlags
+          Left = 90
+          Height = 23
+          Top = 8
+          Width = 502
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 1
+        end
+        object EditSeedMessageID: TEdit
+          AnchorSideLeft.Control = Label5
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = EditMessageType
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = CheckGroupFindFlags
+          Left = 104
+          Height = 23
+          Top = 39
+          Width = 488
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 2
+        end
+        object ButtonFind: TButton
+          AnchorSideLeft.Control = GroupBox3
+          AnchorSideTop.Control = EditSeedMessageID
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 70
+          Width = 49
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Find'
+          TabOrder = 3
+          OnClick = ButtonFindClick
+        end
+      end
+      object GroupBox4: TGroupBox
+        Left = 8
+        Height = 106
+        Top = 141
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Read mail (MAPIReadMail)'
+        ClientHeight = 86
+        ClientWidth = 772
+        TabOrder = 1
+        object Label6: TLabel
+          AnchorSideLeft.Control = GroupBox4
+          AnchorSideTop.Control = EditMessageID
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 60
+          BorderSpacing.Around = 8
+          Caption = 'Message ID'
+        end
+        object EditMessageID: TEdit
+          AnchorSideLeft.Control = Label6
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideRight.Control = CheckGroupReadFlags
+          Left = 76
+          Height = 23
+          Top = 8
+          Width = 379
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 0
+        end
+        object ButtonRead: TButton
+          AnchorSideLeft.Control = GroupBox4
+          AnchorSideTop.Control = EditMessageID
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 39
+          Width = 78
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Read mail'
+          TabOrder = 1
+          OnClick = ButtonReadClick
+        end
+        object CheckGroupReadFlags: TCheckGroup
+          AnchorSideTop.Control = GroupBox4
+          AnchorSideRight.Control = GroupBox4
+          AnchorSideRight.Side = asrBottom
+          Left = 463
+          Height = 70
+          Top = 8
+          Width = 301
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Flags'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 2
+          ClientHeight = 50
+          ClientWidth = 297
+          Columns = 2
+          Items.Strings = (
+            'MAPI_BODY_AS_FILE'
+            'MAPI_ENVELOPE_ONLY'
+            'MAPI_PEEK'
+            'MAPI_SUPPRESS_ATTACH'
+          )
+          TabOrder = 2
+          Data = {
+            0400000002020202
+          }
+        end
+      end
+      object GroupBox10: TGroupBox
+        Left = 8
+        Height = 92
+        Top = 255
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Delete mail (MAPIDeleteMail)'
+        ClientHeight = 72
+        ClientWidth = 772
+        TabOrder = 2
+        object Label9: TLabel
+          AnchorSideLeft.Control = GroupBox10
+          AnchorSideTop.Control = EditMessageIDDel
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 60
+          BorderSpacing.Around = 8
+          Caption = 'Message ID'
+        end
+        object EditMessageIDDel: TEdit
+          AnchorSideLeft.Control = Label9
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBox10
+          AnchorSideRight.Control = GroupBox10
+          AnchorSideRight.Side = asrBottom
+          Left = 76
+          Height = 23
+          Top = 8
+          Width = 688
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Around = 8
+          TabOrder = 0
+        end
+        object ButtonDelete: TButton
+          AnchorSideLeft.Control = GroupBox10
+          AnchorSideTop.Control = EditMessageIDDel
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 39
+          Width = 85
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Delete mail'
+          TabOrder = 1
+          OnClick = ButtonDeleteClick
+        end
+      end
+    end
+    object TabSheetSendMail: TTabSheet
+      Caption = 'Send'
+      ClientHeight = 471
+      ClientWidth = 792
+      TabVisible = False
+      object GroupBox5: TGroupBox
+        Left = 8
+        Height = 106
+        Top = 8
+        Width = 776
+        Align = alTop
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'Send mail (MAPISendMail/MAPISendMailW/MAPISendDocuments)'
+        ClientHeight = 86
+        ClientWidth = 772
+        TabOrder = 0
+        object Label7: TLabel
+          AnchorSideLeft.Control = GroupBox5
+          AnchorSideTop.Control = ComboBoxSendFunc
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 12
+          Width = 47
+          BorderSpacing.Around = 8
+          Caption = 'Function'
+        end
+        object ComboBoxSendFunc: TComboBox
+          AnchorSideLeft.Control = Label7
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBox5
+          Left = 63
+          Height = 23
+          Top = 8
+          Width = 156
+          BorderSpacing.Around = 8
+          ItemHeight = 15
+          ItemIndex = 0
+          Items.Strings = (
+            'MAPISendMail'
+            'MAPISendMailW'
+            'MAPISendDocuments'
+          )
+          Style = csDropDownList
+          TabOrder = 0
+          Text = 'MAPISendMail'
+          OnChange = ComboBoxSendFuncChange
+        end
+        object CheckGroupSendFlags: TCheckGroup
+          AnchorSideTop.Control = GroupBox5
+          AnchorSideRight.Control = GroupBox5
+          AnchorSideRight.Side = asrBottom
+          Left = 476
+          Height = 70
+          Top = 8
+          Width = 288
+          Anchors = [akTop, akRight]
+          AutoFill = True
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Flags (SendMail)'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.TopBottomSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 2
+          ClientHeight = 50
+          ClientWidth = 284
+          Columns = 2
+          Items.Strings = (
+            'MAPI_DIALOG'
+            'MAPI_LOGON_UI'
+            'MAPI_NEW_SESSION'
+            'MAPI_FORCE_UNICODE'
+          )
+          TabOrder = 1
+          Data = {
+            0400000002020202
+          }
+        end
+        object ButtonSend: TButton
+          AnchorSideLeft.Control = GroupBox5
+          AnchorSideTop.Control = ComboBoxSendFunc
+          AnchorSideTop.Side = asrBottom
+          Left = 8
+          Height = 25
+          Top = 39
+          Width = 52
+          AutoSize = True
+          BorderSpacing.Around = 8
+          Caption = 'Send'
+          TabOrder = 2
+          OnClick = ButtonSendClick
+        end
+        object CheckBoxSendAsUTF8: TCheckBox
+          AnchorSideLeft.Control = ComboBoxSendFunc
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = ComboBoxSendFunc
+          AnchorSideTop.Side = asrCenter
+          Left = 259
+          Height = 19
+          Top = 10
+          Width = 72
+          BorderSpacing.Left = 32
+          BorderSpacing.Around = 8
+          Caption = 'Use UTF-8'
+          TabOrder = 3
+        end
+      end
+      object GroupBox6: TGroupBox
+        Left = 8
+        Height = 94
+        Top = 122
+        Width = 776
+        Align = alTop
+        BorderSpacing.Around = 8
+        Caption = 'Recipients'
+        ClientHeight = 74
+        ClientWidth = 772
+        TabOrder = 1
+        object StringGridRecipts: TStringGrid
+          Left = 0
+          Height = 74
+          Top = 0
+          Width = 772
+          Align = alClient
+          AutoFillColumns = True
+          ColCount = 3
+          Columns = <          
+            item
+              ButtonStyle = cbsPickList
+              PickList.Strings = (
+                'MAPI_ORIG'
+                'MAPI_TO'
+                'MAPI_CC'
+                'MAPI_BCC'
+              )
+              Title.Caption = 'Type'
+              Width = 251
+            end          
+            item
+              SizePriority = 2
+              Title.Caption = 'Address'
+              Width = 250
+            end          
+            item
+              Title.Caption = 'Name'
+              Width = 250
+            end>
+          FixedCols = 0
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+          TabOrder = 0
+          ColWidths = (
+            251
+            250
+            250
+          )
+        end
+      end
+      object GroupBox7: TGroupBox
+        Left = 0
+        Height = 136
+        Top = 224
+        Width = 792
+        Align = alClient
+        Caption = 'Message'
+        ClientHeight = 116
+        ClientWidth = 788
+        TabOrder = 2
+        object Label8: TLabel
+          AnchorSideLeft.Control = GroupBox7
+          AnchorSideTop.Control = EditSubject
+          AnchorSideTop.Side = asrCenter
+          Left = 8
+          Height = 15
+          Top = 4
+          Width = 39
+          BorderSpacing.Around = 8
+          Caption = 'Subject'
+        end
+        object EditSubject: TEdit
+          AnchorSideLeft.Control = Label8
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = GroupBox7
+          AnchorSideRight.Control = GroupBox7
+          AnchorSideRight.Side = asrBottom
+          Left = 55
+          Height = 23
+          Top = 0
+          Width = 733
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Bottom = 4
+          TabOrder = 0
+        end
+        object GroupBox9: TGroupBox
+          AnchorSideLeft.Control = GroupBox7
+          AnchorSideTop.Control = EditSubject
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = GroupBox7
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = GroupBox7
+          AnchorSideBottom.Side = asrBottom
+          Left = 0
+          Height = 89
+          Top = 27
+          Width = 788
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          Caption = 'Message body'
+          ClientHeight = 69
+          ClientWidth = 784
+          TabOrder = 1
+          object MemoMsg: TMemo
+            Left = 0
+            Height = 69
+            Top = 0
+            Width = 784
+            Align = alClient
+            ScrollBars = ssAutoBoth
+            TabOrder = 0
+          end
+        end
+      end
+      object GroupBox8: TGroupBox
+        Left = 8
+        Height = 95
+        Top = 368
+        Width = 776
+        Align = alBottom
+        BorderSpacing.Around = 8
+        Caption = 'Files'
+        ClientHeight = 75
+        ClientWidth = 772
+        TabOrder = 3
+        object StringGridFiles: TStringGrid
+          Left = 0
+          Height = 75
+          Top = 0
+          Width = 772
+          Align = alClient
+          AutoFillColumns = True
+          ColCount = 2
+          Columns = <          
+            item
+              Title.Caption = 'File name'
+              Width = 376
+            end          
+            item
+              Title.Caption = 'Full path'
+              Width = 375
+            end>
+          FixedCols = 0
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+          TabOrder = 0
+          ColWidths = (
+            376
+            375
+          )
+        end
+      end
+    end
+  end
+  object MemoLog: TMemo
+    Left = 0
+    Height = 90
+    Top = 520
+    Width = 816
+    Align = alBottom
+    Lines.Strings = (
+      'MemoLog'
+    )
+    TabOrder = 1
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 515
+    Width = 816
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+end

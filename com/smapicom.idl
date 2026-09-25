@@ -1,0 +1,440 @@
+[
+  uuid(e9d4abc1-8ca7-4906-ba3a-debed85c147e),
+  version(1.0),
+  helpstring("Simple MAPI COM/Automation")
+]
+library SMAPICOM
+{
+
+  importlib("stdole2.tlb");
+
+  interface ISMapiFileDesc;
+  interface ISMapiFileTagExt;
+  interface ISMapiLoader;
+  interface ISMapiLibrary;
+
+  [
+    uuid(259326b3-08a3-4eef-8306-a65c896a0c3c),
+    helpstring("")
+  ]
+  enum SMapiRecipClass
+  {
+    MAPI_ORIG = 0,
+    MAPI_TO   = 1,
+    MAPI_CC   = 2,
+    MAPI_BCC  = 3
+  };
+
+  [
+    uuid(ebd03e6d-bb25-4d6d-b3c3-a06cfca9f124),
+    helpstring("")
+  ]
+  enum SMapiMessageFlags
+  {
+    MAPI_UNREAD            = 1,
+    MAPI_RECEIPT_REQUESTED = 2,
+    MAPI_SENT              = 4
+  };
+
+  [
+    uuid(5e4d1ec6-c2ae-40ca-b8ad-ff1e50173dda),
+    helpstring("")
+  ]
+  enum SMapiFlags
+  {
+    MAPI_LOGON_UI          = 0x00000001,
+    MAPI_NEW_SESSION       = 0x00000002,
+    MAPI_DIALOG            = 0x00000008,
+    MAPI_UNREAD_ONLY       = 0x00000020,
+    MAPI_ENVELOPE_ONLY     = 0x00000040,
+    MAPI_PEEK              = 0x00000080,
+    MAPI_GUARANTEE_FIFO    = 0x00000100,
+    MAPI_BODY_AS_FILE      = 0x00000200,
+    MAPI_AB_NOMODIFY       = 0x00000400,
+    MAPI_SUPPRESS_ATTACH   = 0x00000800,
+    MAPI_FORCE_DOWNLOAD    = 0x00001000,
+    MAPI_LONG_MSGID        = 0x00004000,
+    MAPI_PASSWORD_UI       = 0x00020000,
+    MAPI_FORCE_UNICODE     = 0x00040000
+  };
+
+  [
+    uuid(6a9384ea-65bf-4c29-b6e3-ea1fce317a60),
+    helpstring("")
+  ]
+  enum SMapiLibFlags
+  {
+    SMF_INCLUDE_NAME  = 1,
+    SMF_ONLY_DEFAULT  = 2,
+    SMF_UTF8          = 4
+  };
+
+  [
+    uuid(ac07a9d0-ad80-4e92-aedb-9fdfc79bfc58),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiCollection: IDispatch
+  {
+    [propget, id(DISPID_VALUE)] 
+    HRESULT stdcall Item([in] long Index, [out, retval] VARIANT* Value);
+    [propput, id(DISPID_VALUE)] 
+    HRESULT stdcall Item([in] long Index, [in] VARIANT Value);
+
+    [propget, id(1)] 
+    HRESULT stdcall Count([out, retval] long* Value);
+    [propget, id(DISPID_NEWENUM), restricted] 
+
+    HRESULT stdcall _NewEnum([out, retval] IUnknown** Enum);
+    HRESULT stdcall Add([in] VARIANT NewItem, [out, retval] long* Index);
+    HRESULT stdcall Delete([in] long Index);
+    HRESULT stdcall Clear();
+  }
+
+  [
+    uuid(62963666-c343-4161-a5cb-5437a3ac4b30),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiFileDesc: IDispatch
+  {
+    [propget, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([out, retval] ULONG* Value);
+    [propput, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([in] ULONG Value);
+
+    [propget, helpstring("Flags")]
+    HRESULT stdcall Flags([out, retval] ULONG* Value);
+    [propput, helpstring("Flags")]
+    HRESULT stdcall Flags([in] ULONG Value);
+
+    [propget, helpstring("Character in text to be replaced by attachment")]
+    HRESULT stdcall Position([out, retval] ULONG* Value);
+    [propput, helpstring("Character in text to be replaced by attachment")]
+    HRESULT stdcall Position([in] ULONG Value);
+
+    [propget, helpstring("Full path name of attachment file")]
+    HRESULT stdcall PathName([out, retval] BSTR* Value);
+    [propput, helpstring("Full path name of attachment file")]
+    HRESULT stdcall PathName([in] BSTR Value);
+
+    [propget, helpstring("Original file name (optional)")]
+    HRESULT stdcall FileName([out, retval] BSTR* Value);
+    [propput, helpstring("Original file name (optional)")]
+    HRESULT stdcall FileName([in] BSTR Value);
+
+    [propget, helpstring("Attachment file type (can be lpMapiFileTagExt)")]
+    HRESULT stdcall FileType([out, retval] ISMapiFileTagExt** Value);
+    [propput, helpstring("Attachment file type (can be lpMapiFileTagExt)")]
+    HRESULT stdcall FileType([in] ISMapiFileTagExt* Value);
+  }
+
+  [
+    uuid(470625df-43ec-4e50-b5b7-79b1e1b0c910),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiFileTagExt: IDispatch
+  {
+    [propget, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([out, retval] ULONG* Value);
+    [propput, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([in] ULONG Value);
+
+    [propget, helpstring("X.400 OID for this attachment type")]
+    HRESULT stdcall Tag([out, retval] VARIANT* Value);
+    [propput, helpstring("X.400 OID for this attachment type")]
+    HRESULT stdcall Tag([in] VARIANT Value);
+
+    [propget, helpstring("X.400 OID for this attachment's encoding")]
+    HRESULT stdcall Encoding([out, retval] VARIANT* Value);
+    [propput, helpstring("X.400 OID for this attachment's encoding")]
+    HRESULT stdcall Encoding([in] VARIANT Value);
+  }
+
+  [
+    uuid(04f810fc-8d72-46ec-99df-fb8bbe70ac2a),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiRecipDesc: IDispatch
+  {
+    [propget, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([out, retval] ULONG* Value);
+    [propput, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([in] ULONG Value);
+
+    [propget, helpstring("Recipient class (MAPI_TO, MAPI_CC, MAPI_BCC, MAPI_ORIG)")]
+    HRESULT stdcall RecipClass([out, retval] ULONG* Value);
+    [propput, helpstring("Recipient class (MAPI_TO, MAPI_CC, MAPI_BCC, MAPI_ORIG)")]
+    HRESULT stdcall RecipClass([in] ULONG Value);
+
+    [propget, helpstring("Recipient name")]
+    HRESULT stdcall Name([out, retval] BSTR* Value);
+    [propput, helpstring("Recipient name")]
+    HRESULT stdcall Name([in] BSTR Value);
+
+    [propget, helpstring("Recipient address (optional)")]
+    HRESULT stdcall Address([out, retval] BSTR* Value);
+    [propput, helpstring("Recipient address (optional)")]
+    HRESULT stdcall Address([in] BSTR Value);
+
+    [propget, helpstring("System-specific recipient reference")]
+    HRESULT stdcall EntryID([out, retval] VARIANT* Value);
+    [propput, helpstring("System-specific recipient reference")]
+    HRESULT stdcall EntryID([in] VARIANT Value);
+  }
+
+  [
+    uuid(1dc5fcff-6efa-49c8-bf32-c215b3d29e2b),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiMessage: IDispatch
+  {
+    [propget, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([out, retval] ULONG* Value);
+    [propput, helpstring("Reserved for future use (M.B. 0)")]
+    HRESULT stdcall Reserved([in] ULONG Value);
+
+    [propget, helpstring("Message Subject")]
+    HRESULT stdcall Subject([out, retval] BSTR* Value);
+    [propput, helpstring("Message Subject")]
+    HRESULT stdcall Subject([in] BSTR Value);
+
+    [propget, helpstring("Message Text")]
+    HRESULT stdcall NoteText([out, retval] BSTR* Value);
+    [propput, helpstring("Message Text")]
+    HRESULT stdcall NoteText([in] BSTR Value);
+
+    [propget, helpstring("Message Class")]
+    HRESULT stdcall MessageType([out, retval] BSTR* Value);
+    [propput, helpstring("Message Class")]
+    HRESULT stdcall MessageType([in] BSTR Value);
+
+    [propget, helpstring("in YYYY/MM/DD HH:MM format")]
+    HRESULT stdcall DateReceived([out, retval] BSTR* Value);
+    [propput, helpstring("in YYYY/MM/DD HH:MM format")]
+    HRESULT stdcall DateReceived([in] BSTR Value);
+
+    [propget, helpstring("conversation thread ID")]
+    HRESULT stdcall ConversationID([out, retval] BSTR* Value);
+    [propput, helpstring("conversation thread ID")]
+    HRESULT stdcall ConversationID([in] BSTR Value);
+
+    [propget, helpstring("unread,return receipt")]
+    HRESULT stdcall Flags([out, retval] ULONG* Value);
+    [propput, helpstring("unread,return receipt")]
+    HRESULT stdcall Flags([in] ULONG Value);
+
+    [propget, helpstring("Originator descriptor")]
+    HRESULT stdcall Originator([out, retval] ISMapiRecipDesc** Value);
+    [propput, helpstring("Originator descriptor")]
+    HRESULT stdcall Originator([in] ISMapiRecipDesc* Value);
+
+    [propget, helpstring("Recipient descriptors")]
+    HRESULT stdcall Recips([out, retval] ISMapiCollection** Value);
+    [propput, helpstring("Recipient descriptors")]
+    HRESULT stdcall Recips([in] ISMapiCollection* Value);
+
+    [propget, helpstring("Attachment descriptors")]
+    HRESULT stdcall Files([out, retval] ISMapiCollection** Value);
+    [propput, helpstring("Attachment descriptors")]
+    HRESULT stdcall Files([in] ISMapiCollection* Value);
+  }
+
+  [
+    uuid(ea64c36a-166f-4c2a-a649-c88fde626003),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiLoader: IDispatch
+  {
+    HRESULT stdcall LoadLibrary([in] BSTR LibraryFile, [out, retval] ISMapiLibrary** LibraryObject);
+    
+    HRESULT stdcall ListProfiles([in] ULONG Flags, [out, retval] VARIANT* List);
+  }
+
+  [
+    uuid(5c8c3b90-4886-4cb1-9aab-0e15267ed341),
+    version(1.0),
+    dual,
+    oleautomation,
+    helpstring("")
+  ]
+  interface ISMapiLibrary: IDispatch
+  {
+    HRESULT stdcall LoadLibrary([in] BSTR LibraryFile);
+    
+    HRESULT stdcall UnloadLibrary();
+    
+    [propget]
+    HRESULT stdcall LibraryFile([out, retval] BSTR* LibName);
+
+    [propget]
+    HRESULT stdcall IsLibraryLoaded([out, retval] VARIANT_BOOL* Loaded);
+  
+    HRESULT stdcall Logon(
+      [in] ULONG UIParams, 
+      [in] BSTR ProfileName, 
+      [in] BSTR Password,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] ULONG* Session);
+
+    HRESULT stdcall Logoff(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] ULONG Flags,
+      [in] ULONG Reserved);
+    
+    HRESULT stdcall SendMail(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] ISMapiMessage* Message,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [in] VARIANT_BOOL UseAnsiFunction);
+      
+    HRESULT stdcall SendDocuments(
+      [in] ULONG UIParam,
+      [in] BSTR DelimChar,
+      [in] BSTR FullPaths,
+      [in] BSTR FileNames,
+      [in] ULONG Reserved);
+
+    HRESULT stdcall FindNext(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] BSTR MessageType,
+      [in] BSTR SeedMessageID,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] BSTR* MessageID);
+
+    HRESULT ReadMail(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] BSTR MessageID,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] ISMapiMessage** Message);
+      
+    HRESULT stdcall SaveMail(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] ISMapiMessage* Message,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] BSTR* MessageID);
+
+    HRESULT stdcall DeleteMail(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] BSTR MessageID,
+      [in] ULONG Flags,
+      [in] ULONG Reserved);
+
+    HRESULT stdcall Address(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] BSTR Caption,
+      [in] ULONG EditFields,
+      [in] BSTR Labels,
+      [in] ISMapiCollection* Recips,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] ISMapiCollection** NewRecips);
+	
+    HRESULT stdcall Details(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] ISMapiRecipDesc* Recip,
+      [in] ULONG Flags,
+      [in] ULONG Reserved);
+
+    HRESULT stdcall ResolveName(
+      [in] ULONG Session,
+      [in] ULONG UIParam,
+      [in] BSTR Name,
+      [in] ULONG Flags,
+      [in] ULONG Reserved,
+      [out, retval] ISMapiRecipDesc** Recip);
+  }
+
+  [
+    uuid(c40484ea-228e-409d-ab0a-172ae1a2f11d),
+    version(1.0)
+  ]
+  coclass SMapiCollection
+  {
+    [default] interface ISMapiCollection;
+  }
+
+  [
+    uuid(8047d49d-0397-4f5c-9c03-ca7416579ba0),
+    version(1.0)
+  ]
+  coclass SMapiFileDesc
+  {
+    [default] interface ISMapiFileDesc;
+  }
+
+  [
+    uuid(0b68b2f5-22ad-4b3f-be53-0d1d9f57e244),
+    version(1.0)
+  ]
+  coclass SMapiFileTagExt
+  {
+    [default] interface ISMapiFileTagExt;
+  }
+
+  [
+    uuid(886b8c1b-db19-4966-b6bb-67f2a8fbd76f),
+    version(1.0)
+  ]
+  coclass SMapiRecipDesc
+  {
+    [default] interface ISMapiRecipDesc;
+  }
+
+  [
+    uuid(e555476f-da65-47d0-9e48-79e19310d5d5),
+    version(1.0)
+  ]
+  coclass SMapiMessage
+  {
+    [default] interface ISMapiMessage;
+  }
+
+  [
+    uuid(42ba302b-fbec-4962-be1f-3e8573c06617),
+    version(1.0)
+  ]
+  coclass SMapiLoader
+  {
+    [default] interface ISMapiLoader;
+  }
+
+  [
+    uuid(c01ac2c9-b99b-410f-9e5f-3e2596304258),
+    version(1.0)
+  ]
+  coclass SMapiLibrary
+  {
+    [default] interface ISMapiLibrary;
+  }
+
+}
