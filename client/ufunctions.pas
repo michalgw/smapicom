@@ -205,8 +205,8 @@ begin
   if E is EOleSysError then
   begin
     with E as EOleSysError do
-      if Failed(ErrorCode) and (ResultFacility(ErrorCode) = FACILITY_ITF) then
-        Result := ResultCode(ErrorCode);
+      if Failed(ErrorCode) and (ResultFacility(ErrorCode) = FACILITY_ITF) and (ResultCode(ErrorCode) > $200) then
+        Result := ResultCode(ErrorCode) - $200;
   end
   else
     Result := MAPI_E_FAILURE;

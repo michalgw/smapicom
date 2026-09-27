@@ -325,7 +325,7 @@ end;
 begin
   if AResult <> 0 then
     raise EOleSysError.Create(Format('MAPI error number: %d (%s)', [AResult,
-      GetErrorName]), ActiveX.MakeResult(1, FACILITY_ITF, AResult), 0);
+      GetErrorName]), ActiveX.MakeResult(1, FACILITY_ITF, AResult + $200), 0);
 end;
 
 function DllRegisterServer: HResult; stdcall;
